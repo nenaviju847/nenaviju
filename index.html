@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NENAVIJU | Официальный сайт</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #ff0099, #ff7e00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(255, 0, 153, 0.3);
+        }
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        .tg-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #0088cc;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+        .tg-btn:hover {
+            background: #006699;
+            transform: scale(1.05);
+        }
+        .player-container {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .player-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .player-header h2 {
+            font-size: 1.8rem;
+            color: #ff7e00;
+        }
+        .track-list {
+            margin-bottom: 25px;
+        }
+        .track-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
+        }
+        .track-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+        .track-item.active {
+            background: rgba(255, 126, 0, 0.2);
+            border-left-color: #ff7e00;
+        }
+        .track-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .track-info {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        .player-controls {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff0099, #ff7e00);
+            width: 0%;
+            border-radius: 4px;
+            transition: width 0.1s;
+        }
+        .time-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+        .control-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+        }
+        .control-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .control-btn:hover {
+            background: rgba(255, 126, 0, 0.2);
+            transform: scale(1.1);
+        }
+        .play-btn {
+            background: linear-gradient(90deg, #ff0099, #ff7e00);
+            font-size: 1.8rem;
+            width: 60px;
+            height: 60px;
+        }
+        .play-btn:hover {
+            background: linear-gradient(90deg, #ff0099, #ff7e00);
+            box-shadow: 0 0 20px rgba(255, 126, 0, 0.5);
+        }
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .volume-slider {
+            flex-grow: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #ff7e00;
+            cursor: pointer;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; }
+            .container { padding: 10px; }
+            .player-container { padding: 15px; }
+            .control-buttons { gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>NENAVIJU</h1>
+            <p class="tagline">Официальный музыкальный портал группы</p>
+            <a href="https://t.me/NenavijyMusik" class="tg-btn" target="_blank">
+                <i class="fab fa-telegram-plane"></i> Наш Telegram-канал
+            </a>
+        </header>
+
+        <main>
+            <section class="player-container">
+                <div class="player-header">
+                    <h2>Наши треки</h2>
+                    <div class="now-playing" id="nowPlaying">Выберите трек</div>
+                </div>
+
+                <!-- СПИСОК ТРЕКОВ -->
+                <div class="track-list" id="trackList">
+                    <!-- Трек 1 -->
+                    <div class="track-item active" data-src="psychopath.mp3" data-title="Психопат">
+                        <div class="track-title">Психопат</div>
+                        <div class="track-info">Nenaviju • 2024</div>
+                    </div>
+                    <!-- Трек 2 -->
+                    <div class="track-item" data-src="While_were_breathing.mp3" data-title="Пока мы дышим">
+                        <div class="track-title">Пока мы дышим</div>
+                        <div class="track-info">Nenaviju • 2024</div>
+                    </div>
+                    <!-- Добавляйте новые треки здесь по такому же шаблону -->
+                </div>
+
+                <!-- ПЛЕЕР -->
+                <div class="player-controls">
+                    <div class="progress-container" id="progressContainer">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <div class="time-info">
+                        <span id="currentTime">0:00</span>
+                        <span id="duration">0:00</span>
+                    </div>
+                    <div class="control-buttons">
+                        <button class="control-btn" id="prevBtn" title="Предыдущий">
+                            <i class="fas fa-step-backward"></i>
+                        </button>
+                        <button class="control-btn play-btn" id="playBtn" title="Воспроизвести">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="control-btn" id="nextBtn" title="Следующий">
+                            <i class="fas fa-step-forward"></i>
+                        </button>
+                    </div>
+                    <div class="volume-container">
+                        <i class="fas fa-volume-up"></i>
+                        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="0.7">
+                    </div>
+                </div>
+            </section>
+
+            <section style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; margin-top: 30px;">
+                <h3 style="color: #ff7e00; margin-bottom: 15px;">О группе</h3>
+                <p>NENAVIJU — это музыкальный проект, создающий честную и эмоциональную музыку. На этом сайте вы можете бесплатно послушать наши последние треки.</p>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2024 NENAVIJU. Все права на музыку защищены.</p>
+            <p>Этот сайт создан для поклонников нашей музыки.</p>
+        </footer>
+    </div>
+
+    <!-- Аудио элемент (скрытый) -->
+    <audio id="audioPlayer" preload="metadata">
+        Ваш браузер не поддерживает аудиоэлемент.
+    </audio>
+
+    <script>
+        // Элементы DOM
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playBtn = document.getElementById('playBtn');
+        const progressBar = document.getElementById('progressBar');
+        const progressContainer = document.getElementById('progressContainer');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationEl = document.getElementById('duration');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const trackList = document.getElementById('trackList');
+        const trackItems = document.querySelectorAll('.track-item');
+        const nowPlayingEl = document.getElementById('nowPlaying');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        // Текущий трек
+        let currentTrackIndex = 0;
+
+        // Форматирование времени (секунды -> мм:сс)
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        // Обновление прогресса
+        function updateProgress(e) {
+            const { duration, currentTime } = e.srcElement;
+            const progressPercent = (currentTime / duration) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+            currentTimeEl.textContent = formatTime(currentTime);
+            
+            if (!isNaN(duration)) {
+                durationEl.textContent = formatTime(duration);
+            }
+        }
+
+        // Перемотка
+        function setProgress(e) {
+            const width = this.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audioPlayer.duration;
+            
+            if (duration) {
+                audioPlayer.currentTime = (clickX / width) * duration;
+            }
+        }
+
+        // Воспроизведение/пауза
+        function togglePlay() {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                playBtn.title = "Пауза";
+            } else {
+                audioPlayer.pause();
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                playBtn.title = "Воспроизвести";
+            }
+        }
+
+        // Загрузка трека
+        function loadTrack(index) {
+            // Сброс активного класса
+            trackItems.forEach(item => item.classList.remove('active'));
+            
+            // Установка нового активного трека
+            currentTrackIndex = index;
+            const trackItem = trackItems[currentTrackIndex];
+            trackItem.classList.add('active');
+            
+            // Получение данных трека
+            const trackSrc = trackItem.getAttribute('data-src');
+            const trackTitle = trackItem.getAttribute('data-title');
+            
+            // Установка источника и заголовка
+            audioPlayer.src = trackSrc;
+            nowPlayingEl.textContent = `Сейчас играет: ${trackTitle}`;
+            
+            // Сброс прогресса
+            progressBar.style.width = '0%';
+            currentTimeEl.textContent = '0:00';
+            playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            playBtn.title = "Воспроизвести";
+            
+            // Автовоспроизведение
+            audioPlayer.play().catch(e => console.log("Автовоспроизведение заблокировано"));
+        }
+
+        // Следующий трек
+        function nextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % trackItems.length;
+            loadTrack(currentTrackIndex);
+        }
+
+        // Предыдущий трек
+        function prevTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + trackItems.length) % trackItems.length;
+            loadTrack(currentTrackIndex);
+        }
+
+        // Назначение обработчиков событий
+        audioPlayer.addEventListener('timeupdate', updateProgress);
+        audioPlayer.addEventListener('ended', nextTrack);
+        progressContainer.addEventListener('click', setProgress);
+        playBtn.addEventListener('click', togglePlay);
+        volumeSlider.addEventListener('input', () => {
+            audioPlayer.volume = volumeSlider.value;
+        });
+        
+        // Клик по треку в списке
+        trackItems.forEach((item, index) => {
+            item.addEventListener('click', () => loadTrack(index));
+        });
+        
+        // Кнопки навигации
+        prevBtn.addEventListener('click', prevTrack);
+        nextBtn.addEventListener('click', nextTrack);
+
+        // Загрузка первого трека при старте
+        window.addEventListener('load', () => {
+            loadTrack(0);
+        });
+
+        // Отображение длительности трека при загрузке
+        audioPlayer.addEventListener('loadedmetadata', function() {
+            if (!isNaN(this.duration)) {
+                durationEl.textContent = formatTime(this.duration);
+            }
+        });
+    </script>
+</body>
+</html>
